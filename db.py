@@ -5,7 +5,6 @@ from models import Animal
 def getNewId():
     return random.getrandbits(28)
 
-
 animals = [
     # {
     #     'available': True,
@@ -52,7 +51,7 @@ animals = [
 ]    
 
 def connect():
-    conn = sqlite3.connect('animals.db')
+    conn = sqlite3.connect('animalsTest.db')
     cur = conn.cursor()
     cur.execute("CREATE TABLE IF NOT EXISTS animals (id INTEGER PRIMARY KEY, available BOOLEAN, name TEXT, food TEXT, timestamp TEXT)")
     conn.commit()
@@ -62,9 +61,9 @@ def connect():
         insert(animal)
 
 def insert(animal):
-    conn = sqlite3.connect('animals.db')
+    conn = sqlite3.connect('animalsTest.db')
     cur = conn.cursor()
-    cur.execute("INSERT INTO animals VALUES (?,?,?,?, ?)", (
+    cur.execute("INSERT INTO animals VALUES (?,?,?,?,?)", (
         animal.id,
         animal.available,
         animal.name,
@@ -75,33 +74,33 @@ def insert(animal):
     conn.close()
 
 def view():
-    conn = sqlite3.connect('animals.db')
+    conn = sqlite3.connect('animalsTest.db')
     cur = conn.cursor()
     cur.execute("SELECT * FROM animals")
     rows = cur.fetchall()
     animals = []
     for i in rows:
-        animal = Animal(i[0], True if i[1] == 1 else False, i[2], i[3])
+        animal = Animal(i[0], True if i[1] == 1 else False, i[2], i[3], i[4])
         animals.append(animal)
     conn.close()
     return animals
 
 def update(animal):
-    conn = sqlite3.connect('animals.db')
+    conn = sqlite3.connect('animalsTest.db')
     cur = conn.cursor()
-    cur.execute("UPDATE animals SET available=?, name=? WHERE id=?", (animal.available, animal.name, animal.food, animal.id))
+    cur.execute("UPDATE animals SET available=?, name=? food=? WHERE id=?", (animal.available, animal.name, animal.food, animal.id))
     conn.commit()
     conn.close()
 
 def delete(theId):
-    conn = sqlite3.connect('animals.db')
+    conn = sqlite3.connect('animalsTest.db')
     cur = conn.cursor()
     cur.execute("DELETE FROM animals WHERE id=?", (theId,))
     conn.commit()
     conn.close()
 
 def deleteAll():
-    conn = sqlite3.connect('animals.db')
+    conn = sqlite3.connect('animalsTest.db')
     cur = conn.cursor()
     cur.execute("DELETE FROM animals")
     conn.commit()
