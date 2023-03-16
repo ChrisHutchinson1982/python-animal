@@ -141,32 +141,30 @@ def putRequest():
                 'status': '404'
             })
     
-    
-
-
-# @app.route('/request/<id>', methods=['DELETE'])
-# def deleteRequest(id):
-#     req_args = request.view_args
-#     print('req_args: ', req_args)
-#     animals = [a.serialize() for a in db.view()]
-#     if req_args:
-#         for a in animals:
-#             if b['id'] == int(req_args['id']):
-#                 db.delete(b['id'])
-#                 updated_animals = [a.serialize() for a in db.view()]
-#                 print('updated_animals: ', updated_animals)
-#                 return jsonify({
-#                     'res': updated_animals,
-#                     'status': '200',
-#                     'msg': 'Success deleting animal by ID!👍😀',
-#                     'no_of_animals': len(updated_animals)
-#                 })
-#     else:
-#         return jsonify({
-#             'error': f"Error ⛔❌! No animal ID sent!",
-#             'res': '',
-#             'status': '404'
-#         })
+# route to delete a animal by id
+@app.route('/request/<id>', methods=['DELETE'])
+def deleteRequest(id):
+    req_args = request.view_args
+    print('req_args: ', req_args)
+    animals = [a.serialize() for a in db.view()]
+    if req_args:
+        for a in animals:
+            if a['id'] == int(req_args['id']):
+                db.delete(a['id'])
+                updated_animals = [a.serialize() for a in db.view()]
+                print('updated_animals: ', updated_animals)
+                return jsonify({
+                    'res': updated_animals,
+                    'status': '200',
+                    'msg': 'Success deleting animal by ID!',
+                    'no_of_animals': len(updated_animals)
+                })
+    else:
+        return jsonify({
+            'error': f"Error! No animal ID sent!",
+            'res': '',
+            'status': '404'
+        })
 
 if __name__ == '__main__':
     app.run()
