@@ -64,7 +64,7 @@ def connect():
 def insert(animal):
     conn = sqlite3.connect('animals.db')
     cur = conn.cursor()
-    cur.execute("INSERT INTO animals VALUES (?,?,?,?)", (
+    cur.execute("INSERT INTO animals VALUES (?,?,?,?, ?)", (
         animal.id,
         animal.available,
         animal.name,
