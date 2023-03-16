@@ -88,7 +88,7 @@ def view():
 def update(animal):
     conn = sqlite3.connect('animalsTest.db')
     cur = conn.cursor()
-    cur.execute("UPDATE animals SET available=?, name=? food=? WHERE id=?", (animal.available, animal.name, animal.food, animal.id))
+    cur.execute("UPDATE animals SET available=?, name=?, food=? WHERE id=?", (animal.available, animal.name, animal.food, animal.id))
     conn.commit()
     conn.close()
 

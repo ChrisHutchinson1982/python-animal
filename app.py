@@ -107,36 +107,39 @@ def getRequestId(id):
                     'no_of_animals': len(animals)
                 })
 
-# @app.route("/request", methods=['PUT'])
-# def putRequest():
-#     req_data = request.get_json()
-#     availability = req_data['available']
-#     name = req_data['name']
-#     the_id = req_data['id']
-#     animals = [a.serialize() for a in db.view()]
-#     for a in animals:
-#         if b['id'] == the_id:
-#             animal = Animal(
-#                 the_id, 
-#                 availability, 
-#                 name, 
-#                 datetime.datetime.now()
-#             )
-#             print('new animal: ', animal.serialize())
-#             db.update(animal)
-#             new_animals = [a.serialize() for a in db.view()]
-#             print('animals in lib: ', new_animals)
-#             return jsonify({
-#                 # 'error': '',
-#                 'res': animal.serialize(),
-#                 'status': '200',
-#                 'msg': f'Success updating the animal named {name}!👍😀'
-#             })        
-#     return jsonify({
-#                 # 'error': '',
-#                 'res': f'Error ⛔❌! Failed to update animal with name: {name}!',
-#                 'status': '404'
-#             })
+# route to update a animal by id
+@app.route("/request", methods=['PUT'])
+def putRequest():
+    req_data = request.get_json()
+    availability = req_data['available']
+    name = req_data['name']
+    food = req_data['food']
+    the_id = req_data['id']
+    animals = [a.serialize() for a in db.view()]
+    for a in animals:
+        if a['id'] == the_id:
+            animal = Animal(
+                the_id, 
+                availability, 
+                name,
+                food, 
+                datetime.datetime.now()
+            )
+            print('new animal: ', animal.serialize())
+            db.update(animal)
+            new_animals = [a.serialize() for a in db.view()]
+            print('animals in lib: ', new_animals)
+            return jsonify({
+                # 'error': '',
+                'res': animal.serialize(),
+                'status': '200',
+                'msg': f'Success updating the animal named {name}!👍😀'
+            })        
+    return jsonify({
+                # 'error': '',
+                'res': f'Error! Failed to update animal with name: {name}!',
+                'status': '404'
+            })
     
     
 
