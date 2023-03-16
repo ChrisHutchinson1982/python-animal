@@ -14,7 +14,7 @@ In your terminal, run the following code to start your Flask server:
 > > > flask run
 ```
 
-test the api using Postman, open the database with DBeaver to see the cars table and its data.
+Test the api using Postman:
 
 HTTP GET request => http://127.0.0.1:5000
 
